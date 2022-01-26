@@ -20,7 +20,7 @@ const [active, setActive] = useState(document.location.pathname)
 console.log(document.location.pathname === '/progress' || '/user/Bench%20Press');
 
 return <List>
-    {[{name : 'Latest Workouts',location:'/user'}, {name: 'Workout Progress', location:'/progress'},{name:'User Profile',location:'/profile'}].map((text, index) => (
+    {[{name : 'Latest Workouts',location:'/user'}, {name: 'Workout Progress', location:'/progress'}].map((text, index) => (
       <Fragment>
       <ListItem button key={text.name}  onClick={()=>history(text.location)} mt={2} className={active == text.location ? 'active' : ''}  sx={{padding:'12px 10px 12px 20px',fontWeight:'200', fontFamily:'Roboto',fontSize:'18px',
       "&:hover": {backgroundColor:"#545454"}

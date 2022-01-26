@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import dateFormat, { masks } from "dateformat";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis ,ResponsiveContainer} from 'recharts';
 
 const DetailPage = () =>{
 
@@ -53,9 +53,24 @@ refresh();
   <Box sx={{padding: '12px 10px', backgroundColor:'#363636', color:'#e0e0e0', textAlign:'left'}}><Typography sx={{width:'fit-content'}}>{exc}</Typography></Box>
 
   <Box>
-  <Box sx={{display:'flex'}}>
-  <Box sx={{width:'50%',padding:'16px'}}>
- <Paper><Typography variant={"h6"} align={"left"} ml={1} mb={1.5} pt={1.5} pl={1} sx={{color:'#7986cb', fontSize:'16px'}}>History</Typography>
+  <Box sx={{display:'flex', flexWrap:'wrap' }} >
+  <Grid sx={{padding: '16px 6px 0 16px' ,color:'#e0e0e0', textAlign:'left', width:'47%'}} xs={12} xl={12} md={12}>
+  <Paper >
+  <Typography variant={"h6"} align={"left"} ml={1} mb={1} pt={1} pl={1} pb={1} sx={{color:'#7986cb', fontSize:'16px'}}>Workout Progress</Typography>
+<ResponsiveContainer  width={"99%"} height={300}>
+<LineChart  data={data ? data.exerciseList.map((d)=>{return {name:dateFormat(new Date(d.date),'yyyy-mm-dd'),uv:d.weight }}): null}>
+<Line type="monotone" dataKey="uv" stroke="#8884d8" />
+<CartesianGrid stroke="#ccc" />
+<XAxis  interval="preserveStart"/>
+
+<YAxis type="number" domain={['dataMin', 'dataMax']} />
+</LineChart>
+</ResponsiveContainer >
+</Paper>
+
+  </Grid>
+  <Grid sx={{width:'50%',padding:'16px 6px 8px 16px'}}  xs={12} xl={12} md={12} pt={2}>
+ <Paper><Typography variant={"h6"} align={"left"} ml={1} mb={1} pt={1}  sx={{color:'#7986cb', fontSize:'16px'}}>History</Typography>
          <TableContainer >
              <Table >
              <TableHead sx={{backgroundColor:'#ec407a'}}>
@@ -81,21 +96,9 @@ refresh();
    </TableContainer>
     </Paper>
 
-       </Box>
+       </Grid>
 
-        <Box sx={{padding: '8px 16px' ,color:'#e0e0e0', textAlign:'left', width:'50%'}}>
-        <Paper >
-        <Typography variant={"h6"} align={"left"} ml={1} mb={1.5} pt={1.5} pl={1} sx={{color:'#7986cb', fontSize:'16px'}}>Progress</Typography>
-      <LineChart width={600} height={300} data={data ? data.exerciseList.map((d)=>{return {name:dateFormat(new Date(d.date),'yyyy-mm-dd'),uv:d.weight }}): null}>
-     <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-     <CartesianGrid stroke="#ccc" />
-     <XAxis  interval="preserveStart"/>
 
-     <YAxis type="number" domain={['dataMin', 'dataMax']} />
-   </LineChart>
-   </Paper>
-
-        </Box>
         </Box>
         <Box sx={{display:'flex', width:'50%'}}>
         <Box sx={{padding: '8px 16px' ,color:'#e0e0e0', textAlign:'left', width:'40%'}}>
